@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WME Clean permalink
 // @description  Script removes S-parameters from a URL. Layer settings from PL do not change your own
-// @version      2024.02.24.02
+// @version      2024.02.24.03
 // @author       Sapozhnik
 // @namespace    https://greasyfork.org/ru/users/160654-waze-ukraine
 // @updateURL    https://greasyfork.org/ru/scripts/488167-wme-clean-permalink
@@ -16,11 +16,14 @@
 
 (function () {
     'use strict'
-    const regex = /&s=\d*/;
+    const regex = /&s=\d*/;             // прибираємо шари налаштувань
+    const regex2 = /#[^&?]*/;           // прибираємо хеш і далі
+   
     let url = window.location.href;
 
-    if (regex.test(url)) {
+    if (regex.test(url) || regex2.test(url)) {
         url = url.replace(regex,'');
+        url = url.replace(regex2,'');
         window.location.replace(url);
     }
 })()
